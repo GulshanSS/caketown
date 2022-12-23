@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import dbConnect from "./utils/dbConnect";
+import logger from "./utils/logger";
 
 const app = express();
 
@@ -13,5 +14,5 @@ dbConnect();
 
 const PORT = process.env.PORT || 8090;
 app.listen(PORT, () => {
-  console.log("Server Started");
+  logger.info(`Server Started at http://localhost:${PORT}`);
 });

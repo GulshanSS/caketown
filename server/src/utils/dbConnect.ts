@@ -1,12 +1,12 @@
-import { Request, Response } from "express";
 import mongoose from "mongoose";
+import logger from "./logger";
 
 const dbConnect = async () => {
   try {
     await mongoose.connect(process.env.DB_URI as string);
-    console.log("DB connected");
+    logger.info("DB connected");
   } catch (e: any) {
-    console.error("DB connection issue");
+    logger.error("DB connection issue");
     process.exit(1);
   }
 };
