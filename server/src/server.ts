@@ -3,8 +3,8 @@ import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
 
-import dbConnect from "./utils/dbConnect";
-import logger from "./utils/logger";
+import dbConnect from "./config/db.config";
+import logger from "./config/logger.config";
 import CategoryRouter from "./routes/category.routes";
 
 const app = express();

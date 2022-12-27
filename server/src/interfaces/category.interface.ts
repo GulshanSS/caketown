@@ -1,8 +1,11 @@
 import { AssetDoc } from "../models/asset.model";
 
-export default interface ICategory {
+export interface ICategory {
   name: string;
-  asset: AssetDoc["_id"];
+  assetDetails: {
+    displayAssetId: AssetDoc["_id"];
+    assets: [AssetDoc["_id"]];
+  };
   showInHome: boolean;
   showInSearch: boolean;
   status: boolean;

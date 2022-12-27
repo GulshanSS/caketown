@@ -1,14 +1,16 @@
 export default interface IAsset {
-  thumnail: {
+  name: string;
+  tiny: {
     cloudinaryId: string;
     cloudinaryUrl: string;
   };
-  midReso: {
+  medium: {
     cloudinaryId: string;
     cloudinaryUrl: string;
   };
-  maxReso: {
+  large: {
     cloudinaryId: string;
     cloudinaryUrl: string;
   };
+  alt: string;
 }
