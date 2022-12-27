@@ -6,18 +6,12 @@ export interface AssetDoc extends IAsset, ITimeStamp, mongoose.Document {}
 
 const AssetSchema = new mongoose.Schema(
   {
-    tiny: {
+    name: String,
+    image: {
       cloudinaryId: String,
       cloudinaryUrl: String,
     },
-    medium: {
-      cloudinaryId: String,
-      cloudinaryUrl: String,
-    },
-    large: {
-      cloudinaryId: String,
-      cloudinaryUrl: String,
-    },
+    alt: String,
   },
   {
     timestamps: true,

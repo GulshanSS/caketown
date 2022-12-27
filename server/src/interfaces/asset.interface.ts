@@ -1,14 +1,6 @@
 export default interface IAsset {
   name: string;
-  tiny: {
-    cloudinaryId: string;
-    cloudinaryUrl: string;
-  };
-  medium: {
-    cloudinaryId: string;
-    cloudinaryUrl: string;
-  };
-  large: {
+  image: {
     cloudinaryId: string;
     cloudinaryUrl: string;
   };

@@ -3,6 +3,7 @@ import logger from "./logger.config";
 
 const dbConnect = async () => {
   try {
+    mongoose.set("strictQuery", false);
     await mongoose.connect(process.env.DB_URI as string);
     logger.info("DB connected");
   } catch (e: any) {

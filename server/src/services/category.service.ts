@@ -1,6 +1,5 @@
 import { ICategory } from "../interfaces/category.interface";
 import CategoryModel from "../models/category.model";
-import logger from "../utils/logger";
 
 export const getAllCategory = async () => {
   try {

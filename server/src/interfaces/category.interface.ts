@@ -2,7 +2,7 @@ import { AssetDoc } from "../models/asset.model";
 
 export interface ICategory {
   name: string;
-  assetDetails: {
+  assetDetails?: {
     displayAssetId: AssetDoc["_id"];
     assets: [AssetDoc["_id"]];
   };

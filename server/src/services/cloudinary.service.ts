@@ -1,10 +1,7 @@
 import cloudinary from "../config/cloudinary.config";
+import logger from "../config/logger.config";
 import AssetModel from "../models/asset.model";
-import {
-  tinyPreSets,
-  mediumPreSets,
-  largePreSets,
-} from "../utils/cloudinary.utils";
+import { defaultPreSets } from "../utils/cloudinary.utils";
 
 export const uploadImage = async (
   filePath: string,
@@ -13,34 +10,20 @@ export const uploadImage = async (
 ) => {
   try {
     if (typeof filePath !== undefined) {
-      const tinyRes = await cloudinary.uploader.upload(
+      const result = await cloudinary.uploader.upload(
         filePath,
-        tinyPreSets(section, fileName)
-      );
-      const mediumRes = await cloudinary.uploader.upload(
-        filePath,
-        mediumPreSets(section, fileName)
-      );
-      const largeRes = await cloudinary.uploader.upload(
-        filePath,
-        largePreSets(section, fileName)
+        defaultPreSets(section, fileName)
       );
       const assetDetails = await AssetModel.create({
-        tiny: {
-          cloudinaryId: tinyRes.public_id,
-          cloudinaryUrl: tinyRes.secure_url,
+        name: fileName,
+        image: {
+          cloudinaryId: result.public_id,
+          cloudinaryUrl: result.secure_url,
         },
-        medium: {
-          cloudinaryId: mediumRes.public_id,
-          cloudinaryUrl: mediumRes.secure_url,
-        },
-        large: {
-          cloudinaryId: largeRes.public_id,
-          cloudinaryUrl: largeRes.secure_url,
-        },
+        alt: fileName,
       });
-
-      return assetDetails;
+      logger.info(filePath, section, fileName);
+      return assetDetails._id;
     }
   } catch (e: any) {
     throw new Error(e);
