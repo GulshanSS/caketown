@@ -5,7 +5,7 @@ import {
   getCategoryById,
 } from "../services/category.service";
 import logger from "../config/logger.config";
-import { CreateCategoryInput } from "../validation/category.schema";
+import { CreateCategoryInput } from "../schemas/category.schema";
 import { uploadImage } from "../services/cloudinary.service";
 import IFile from "../interfaces/file.interface";
 

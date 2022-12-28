@@ -22,7 +22,6 @@ export const uploadImage = async (
         },
         alt: fileName,
       });
-      logger.info(filePath, section, fileName);
       return assetDetails._id;
     }
   } catch (e: any) {

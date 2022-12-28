@@ -6,12 +6,18 @@ import {
   createCategoryHandler,
   getAllCategoryHandler,
   getCategoryByIdHandler,
-} from "../controller/category.controller";
+} from "../controllers/category.controller";
+import { createCategorySchema } from "../schemas/category.schema";
+import validateResource from "../middlewares/validateResource";
 
 CategoryRouter.get("/", getAllCategoryHandler);
 
 CategoryRouter.get("/:categoryId", getCategoryByIdHandler);
 
-CategoryRouter.post("/create", uploader.array("files"), createCategoryHandler);
+CategoryRouter.post(
+  "/create",
+  [uploader.array("files"), validateResource(createCategorySchema)],
+  createCategoryHandler
+);
 
 export default CategoryRouter;
