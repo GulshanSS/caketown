@@ -1,12 +1,13 @@
+import mongoose from "mongoose";
 import { AssetDoc } from "../models/asset.model";
+import ITimeStamp from "./timestamp.interface";
 
 export interface ICategory {
   name: string;
-  assetDetails?: {
-    displayAssetId: AssetDoc["_id"];
-    assets: [AssetDoc["_id"]];
-  };
-  showInHome: boolean;
-  showInSearch: boolean;
-  status: boolean;
+  assets?: AssetDoc["_id"][];
+  showInHome?: boolean;
+  showInSearch?: boolean;
+  status?: boolean;
 }
+
+export interface CategoryDoc extends ICategory, ITimeStamp, mongoose.Document {}

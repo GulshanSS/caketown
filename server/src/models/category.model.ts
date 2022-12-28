@@ -1,8 +1,5 @@
 import mongoose from "mongoose";
-import ICategory from "../interfaces/asset.interface";
-import ITimeStamp from "../interfaces/timestamp.interface";
-
-export interface CategoryDoc extends ICategory, ITimeStamp, mongoose.Document {}
+import { CategoryDoc } from "../interfaces/category.interface";
 
 const CategorySchema = new mongoose.Schema(
   {
@@ -10,18 +7,12 @@ const CategorySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    assetDetails: {
-      displayAssetId: {
+    assets: [
+      {
         type: mongoose.Schema.Types.ObjectId,
         ref: "asset",
       },
-      assets: [
-        {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "asset",
-        },
-      ],
-    },
+    ],
     showInHome: {
       type: Boolean,
       default: true,

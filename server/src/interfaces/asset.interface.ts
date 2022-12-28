@@ -1,4 +1,7 @@
-export default interface IAsset {
+import mongoose from "mongoose";
+import ITimeStamp from "./timestamp.interface";
+
+export interface IAsset {
   name: string;
   image: {
     cloudinaryId: string;
@@ -6,3 +9,5 @@ export default interface IAsset {
   };
   alt: string;
 }
+
+export interface AssetDoc extends IAsset, ITimeStamp, mongoose.Document {}

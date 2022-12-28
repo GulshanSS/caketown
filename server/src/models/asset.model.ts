@@ -1,8 +1,5 @@
 import mongoose from "mongoose";
-import IAsset from "../interfaces/asset.interface";
-import ITimeStamp from "../interfaces/timestamp.interface";
-
-export interface AssetDoc extends IAsset, ITimeStamp, mongoose.Document {}
+import { AssetDoc } from "../interfaces/asset.interface";
 
 const AssetSchema = new mongoose.Schema(
   {

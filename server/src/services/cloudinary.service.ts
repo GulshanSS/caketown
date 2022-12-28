@@ -1,5 +1,4 @@
 import cloudinary from "../config/cloudinary.config";
-import logger from "../config/logger.config";
 import AssetModel from "../models/asset.model";
 import { defaultPreSets } from "../utils/cloudinary.utils";
 
@@ -24,6 +23,20 @@ export const uploadImage = async (
       });
       return assetDetails._id;
     }
+  } catch (e: any) {
+    throw new Error(e);
+  }
+};
+
+export const deleteImage = async (assetId: string) => {
+  try {
+    const asset = await AssetModel.findOne({ _id: assetId });
+    if (!asset) {
+      return false;
+    }
+    await cloudinary.uploader.destroy(asset.image.cloudinaryId);
+    await AssetModel.deleteOne({ _id: assetId });
+    return true;
   } catch (e: any) {
     throw new Error(e);
   }
