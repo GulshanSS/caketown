@@ -25,7 +25,6 @@ export const getAllCategoryHandler = async (req: Request, res: Response) => {
     }
     return res.status(200).json({ items: categories.length, categories });
   } catch (e: any) {
-    logger.error(e);
     return res.status(409).json({ message: e.message });
   }
 };
@@ -63,7 +62,6 @@ export const createCategoryHandler = async (
     const category = await createCategory({ ...body });
     return res.status(201).json(category);
   } catch (e: any) {
-    console.log(e);
     return res.status(409).json({ message: e.message });
   }
 };
@@ -81,7 +79,7 @@ export const updateCategoryHandler = async (
     const files = req.files as IFile[];
     const update = req.body;
     let assets = oldCategory?.assets as string[];
-    if (typeof req.files !== undefined && files?.length > 0) {
+    if (typeof files !== undefined && files?.length > 0) {
       let promises: Promise<any>[] = [];
       promises = files?.map((file: IFile) =>
         uploadImage(file.path, "category", update.name)
@@ -113,7 +111,7 @@ export const deleteCategoryHandler = async (
       return res.status(404).json({ message: "Category not found" });
     }
     const assets = category.assets || [];
-    if (typeof assets?.length !== undefined || assets?.length !== 0) {
+    if (typeof assets?.length !== undefined && assets?.length > 0) {
       let promises: Promise<boolean>[] = [];
       promises = assets?.map((assetId: string) => deleteImage(assetId));
       await Promise.all(promises);

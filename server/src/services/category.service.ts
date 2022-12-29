@@ -1,5 +1,4 @@
 import { UpdateQuery } from "mongoose";
-import logger from "../config/logger.config";
 import { CategoryDoc, ICategory } from "../interfaces/category.interface";
 import CategoryModel from "../models/category.model";
 
