@@ -3,6 +3,7 @@ import IFile from "../interfaces/file.interface";
 import {
   CreateSubCategoryInput,
   DeleteSubCategoryInput,
+  GetSubCategoryInput,
   UpdateSubCategoryInput,
 } from "../schemas/subCategory.schema";
 import { deleteImage, uploadImage } from "../services/cloudinary.service";
@@ -32,7 +33,7 @@ export const getAllSubCategoryHandler = async (req: Request, res: Response) => {
 };
 
 export const getSubCategoryByIdHandler = async (
-  req: Request,
+  req: Request<GetSubCategoryInput["params"]>,
   res: Response
 ) => {
   try {
@@ -119,7 +120,7 @@ export const deleteSubCategoryHandler = async (
       return res.status(404).json({ message: "Sub Category Not Found" });
     }
     const assets = subCategory.assets || [];
-    if (typeof assets?.length !== undefined && assets?.length > 0) {
+    if (typeof assets.length !== undefined && assets.length > 0) {
       let promises: Promise<boolean>[] = [];
       promises = assets?.map((assetId: string) => deleteImage(assetId));
       await Promise.all(promises);

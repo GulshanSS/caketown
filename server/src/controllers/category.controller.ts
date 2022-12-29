@@ -10,6 +10,7 @@ import logger from "../config/logger.config";
 import {
   CreateCategoryInput,
   DeleteCategoryInput,
+  GetCategoryInput,
   UpdateCategoryInput,
 } from "../schemas/category.schema";
 import { deleteImage, uploadImage } from "../services/cloudinary.service";
@@ -29,7 +30,10 @@ export const getAllCategoryHandler = async (req: Request, res: Response) => {
   }
 };
 
-export const getCategoryByIdHandler = async (req: Request, res: Response) => {
+export const getCategoryByIdHandler = async (
+  req: Request<GetCategoryInput["params"]>,
+  res: Response
+) => {
   try {
     const categoryId = req.params.categoryId;
     const category = await getCategoryById(categoryId);

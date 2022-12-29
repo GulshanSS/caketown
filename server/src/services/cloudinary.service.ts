@@ -9,7 +9,7 @@ export const uploadImage = async (
 ) => {
   try {
     if (typeof filePath !== undefined) {
-      const result = await cloudinary.uploader.upload(
+      const result = await cloudinary.uploader.upload_chunked(
         filePath,
         defaultPreSets(section, fileName)
       );

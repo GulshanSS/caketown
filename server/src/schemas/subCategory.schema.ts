@@ -1,5 +1,4 @@
 import { object, string, array, boolean, TypeOf } from "zod";
-import mongoose from "mongoose";
 
 const payload = {
   body: object({

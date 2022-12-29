@@ -7,6 +7,7 @@ import dbConnect from "./config/db.config";
 import logger from "./config/logger.config";
 import CategoryRouter from "./routes/category.routes";
 import SubCategoryRouter from "./routes/subCategory.routes";
+import InnerCategoryRouter from "./routes/innerCategory.routes";
 
 const app = express();
 
@@ -16,6 +17,7 @@ dbConnect();
 
 app.use("/category", CategoryRouter);
 app.use("/subcategory", SubCategoryRouter);
+app.use("/innerCategory", InnerCategoryRouter);
 
 const PORT = process.env.PORT || 8090;
 app.listen(PORT, () => {
