@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { FOLDER_NAME } from "../config/constants.config";
 import IFile from "../interfaces/file.interface";
 import {
   CreateInnerCategoryInput,
@@ -6,7 +7,6 @@ import {
   GetInnerCategoryInput,
   UpdateInnerCategoryInput,
 } from "../schemas/innerCategory.schema";
-import { deleteImage, uploadImage } from "../services/cloudinary.service";
 import {
   createInnerCategory,
   deleteInnerCategory,
@@ -14,6 +14,7 @@ import {
   getInnerCategoryById,
   updateInnerCategory,
 } from "../services/innerCategory.service";
+import { deleteAssets, uploadAssets } from "../utils/handleAssetPromises";
 
 export const getAllInnerCategoryHandler = async (
   req: Request,
@@ -56,16 +57,12 @@ export const createInnerCategoryHandler = async (
 ) => {
   try {
     const body = req.body;
-    const files = req.files as IFile[];
-    let assets = [] as string[];
-    if (typeof files !== undefined && files.length > 0) {
-      let promises: Promise<any>[] = [];
-      promises = files?.map((file: IFile) =>
-        uploadImage(file.path, "innerCategory", body.name)
-      );
-      assets = await Promise.all(promises);
-      body.assets = assets;
-    }
+    body.assets = await uploadAssets(
+      req.files as IFile[],
+      [] as string[],
+      FOLDER_NAME.INNER_CATEGORY,
+      body.name
+    );
     const innerCategory = await createInnerCategory({ ...body });
     return res.status(201).json(innerCategory);
   } catch (e: any) {
@@ -88,21 +85,14 @@ export const updateInnerCategoryHandler = async (
       return res.status(404).json({ message: "Inner Category Not Found" });
     }
     const update = req.body;
-    const files = req.files as IFile[];
-    let assets = oldInnerCategory?.assets as string[];
-    if (typeof files !== undefined && files?.length > 0) {
-      let promises = files?.map((file: IFile) =>
-        uploadImage(file.path, "innerCategory", update.name)
-      );
-      const newUploadedAssets = await Promise.all(promises);
-      assets =
-        typeof assets !== undefined
-          ? [...assets!, ...newUploadedAssets]
-          : newUploadedAssets;
-    }
+    update.assets = await uploadAssets(
+      req.files as IFile[],
+      oldInnerCategory.assets as string[],
+      FOLDER_NAME.INNER_CATEGORY,
+      update.name
+    );
     const updatedInnerCategory = await updateInnerCategory(innerCategoryId, {
       ...update,
-      assets,
     });
     return res.status(201).json(updatedInnerCategory);
   } catch (e: any) {
@@ -120,12 +110,7 @@ export const deleteInnerCategoryHandler = async (
     if (!innerCategory) {
       return res.status(404).json({ message: "Inner Category Not Found" });
     }
-    const assets = innerCategory.assets || [];
-    if (typeof assets.length !== undefined && assets.length > 0) {
-      let promises: Promise<boolean>[] = [];
-      promises = assets.map((assetId: string) => deleteImage(assetId));
-      await Promise.all(promises);
-    }
+    await deleteAssets(innerCategory.assets as string[]);
     await deleteInnerCategory(innerCategoryId);
     return res
       .status(200)

@@ -3,6 +3,8 @@ import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
 
+import { PORT } from "./config/constants.config";
+
 import dbConnect from "./config/db.config";
 import logger from "./config/logger.config";
 import CategoryRouter from "./routes/category.routes";
@@ -19,7 +21,6 @@ app.use("/category", CategoryRouter);
 app.use("/subcategory", SubCategoryRouter);
 app.use("/innerCategory", InnerCategoryRouter);
 
-const PORT = process.env.PORT || 8090;
 app.listen(PORT, () => {
   logger.info(`Server Started at http://localhost:${PORT}`);
 });

@@ -13,8 +13,9 @@ import {
   GetCategoryInput,
   UpdateCategoryInput,
 } from "../schemas/category.schema";
-import { deleteImage, uploadImage } from "../services/cloudinary.service";
 import IFile from "../interfaces/file.interface";
+import { deleteAssets, uploadAssets } from "../utils/handleAssetPromises";
+import { FOLDER_NAME } from "../config/constants.config";
 
 export const getAllCategoryHandler = async (req: Request, res: Response) => {
   try {
@@ -53,16 +54,12 @@ export const createCategoryHandler = async (
 ) => {
   try {
     const body = req.body;
-    const files = req.files as IFile[];
-    let assets = [] as string[];
-    if (typeof files !== undefined && files?.length > 0) {
-      let promises: Promise<any>[] = [];
-      promises = files?.map((file: IFile) =>
-        uploadImage(file.path, "category", body.name)
-      );
-      assets = await Promise.all(promises);
-      body.assets = assets;
-    }
+    body.assets = await uploadAssets(
+      req.files as IFile[],
+      [] as string[],
+      FOLDER_NAME.CATEGORY,
+      body.name
+    );
     const category = await createCategory({ ...body });
     return res.status(201).json(category);
   } catch (e: any) {
@@ -80,23 +77,15 @@ export const updateCategoryHandler = async (
     if (!oldCategory) {
       return res.status(404).json({ message: "Category Not found" });
     }
-    const files = req.files as IFile[];
     const update = req.body;
-    let assets = oldCategory?.assets as string[];
-    if (typeof files !== undefined && files?.length > 0) {
-      let promises: Promise<any>[] = [];
-      promises = files?.map((file: IFile) =>
-        uploadImage(file.path, "category", update.name)
-      );
-      const newUploadedAssets = await Promise.all(promises);
-      assets =
-        typeof assets !== undefined
-          ? [...assets!, ...newUploadedAssets]
-          : newUploadedAssets;
-    }
+    update.assets = await uploadAssets(
+      req.files as IFile[],
+      oldCategory.assets as string[],
+      FOLDER_NAME.CATEGORY,
+      update.name
+    );
     const updatedCategory = await updateCategory(categoryId, {
       ...update,
-      assets,
     });
     return res.status(201).json(updatedCategory);
   } catch (e: any) {
@@ -114,17 +103,13 @@ export const deleteCategoryHandler = async (
     if (!category) {
       return res.status(404).json({ message: "Category not found" });
     }
-    const assets = category.assets || [];
-    if (typeof assets?.length !== undefined && assets?.length > 0) {
-      let promises: Promise<boolean>[] = [];
-      promises = assets?.map((assetId: string) => deleteImage(assetId));
-      await Promise.all(promises);
-    }
+    await deleteAssets(category.assets as string[]);
     await deleteCategory(categoryId);
     return res
       .status(200)
       .json({ message: `${category.name} category is deleted` });
   } catch (e: any) {
-    return res.status(409).json({ message: e.message });
+    console.log(e);
+    return res.status(409).json(e.message);
   }
 };

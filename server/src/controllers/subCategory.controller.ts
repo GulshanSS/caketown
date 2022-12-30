@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { FOLDER_NAME } from "../config/constants.config";
 import IFile from "../interfaces/file.interface";
 import {
   CreateSubCategoryInput,
@@ -6,7 +7,6 @@ import {
   GetSubCategoryInput,
   UpdateSubCategoryInput,
 } from "../schemas/subCategory.schema";
-import { deleteImage, uploadImage } from "../services/cloudinary.service";
 import {
   createSubCategory,
   deleteSubCategory,
@@ -14,6 +14,7 @@ import {
   getSubCategoryById,
   updateSubCategory,
 } from "../services/subCategory.service";
+import { deleteAssets, uploadAssets } from "../utils/handleAssetPromises";
 
 export const getAllSubCategoryHandler = async (req: Request, res: Response) => {
   try {
@@ -54,16 +55,12 @@ export const createSubCategoryHandler = async (
 ) => {
   try {
     const body = req.body;
-    const files = req.files as IFile[];
-    let assets = [] as string[];
-    if (typeof files !== undefined && files?.length > 0) {
-      let promises: Promise<any>[] = [];
-      promises = files?.map((file: IFile) =>
-        uploadImage(file.path, "subCategory", body.name)
-      );
-      assets = await Promise.all(promises);
-      body.assets = assets;
-    }
+    body.assets = await uploadAssets(
+      req.files as IFile[],
+      [] as string[],
+      FOLDER_NAME.SUB_CATEGORY,
+      body.name
+    );
     const subCategory = await createSubCategory({ ...body });
     return res.status(201).json(subCategory);
   } catch (e: any) {
@@ -85,23 +82,15 @@ export const updateSubCategoryHandler = async (
     if (!oldSubCategory) {
       return res.status(404).json({ message: "Sub Category Not Found" });
     }
-    const files = req.files as IFile[];
     const update = req.body;
-    let assets = oldSubCategory?.assets as string[];
-    if (typeof files !== undefined && files?.length > 0) {
-      let promises: Promise<any>[] = [];
-      promises = files?.map((file: IFile) =>
-        uploadImage(file.path, "subCategory", update.name)
-      );
-      const newUploadedAssets = await Promise.all(promises);
-      assets =
-        typeof assets !== undefined
-          ? [...assets!, ...newUploadedAssets]
-          : newUploadedAssets;
-    }
+    update.assets = await uploadAssets(
+      req.files as IFile[],
+      oldSubCategory.assets as string[],
+      FOLDER_NAME.SUB_CATEGORY,
+      update.name
+    );
     const updatedSubCategory = await updateSubCategory(subCategoryId, {
       ...update,
-      assets,
     });
     return res.status(201).json(updatedSubCategory);
   } catch (e: any) {
@@ -119,12 +108,7 @@ export const deleteSubCategoryHandler = async (
     if (!subCategory) {
       return res.status(404).json({ message: "Sub Category Not Found" });
     }
-    const assets = subCategory.assets || [];
-    if (typeof assets.length !== undefined && assets.length > 0) {
-      let promises: Promise<boolean>[] = [];
-      promises = assets?.map((assetId: string) => deleteImage(assetId));
-      await Promise.all(promises);
-    }
+    await deleteAssets(subCategory.assets as string[]);
     await deleteSubCategory(subCategoryId);
     return res
       .status(200)

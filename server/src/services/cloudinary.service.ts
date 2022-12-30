@@ -1,25 +1,26 @@
 import cloudinary from "../config/cloudinary.config";
+import IFile from "../interfaces/file.interface";
 import AssetModel from "../models/asset.model";
 import { defaultPreSets } from "../utils/cloudinary.utils";
 
 export const uploadImage = async (
-  filePath: string,
-  section: string,
-  fileName: string
+  file: IFile,
+  folder: string,
+  filename: string
 ) => {
   try {
-    if (typeof filePath !== undefined) {
-      const result = await cloudinary.uploader.upload_chunked(
-        filePath,
-        defaultPreSets(section, fileName)
+    if (typeof file.path !== undefined) {
+      const { public_id, url } = await cloudinary.uploader.upload(
+        file.path,
+        defaultPreSets(folder, filename)
       );
       const assetDetails = await AssetModel.create({
-        name: fileName,
+        name: filename,
         image: {
-          cloudinaryId: result.public_id,
-          cloudinaryUrl: result.secure_url,
+          cloudinaryId: public_id,
+          cloudinaryUrl: url,
         },
-        alt: fileName,
+        alt: filename,
       });
       return assetDetails._id;
     }
