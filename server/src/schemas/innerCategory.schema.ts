@@ -18,7 +18,7 @@ const params = {
   params: object({
     innerCategoryId: string({
       required_error: "Inner Category Id is required",
-    }).min(1, { message: "Inner Category Id cannot be empty" }),
+    }),
   }),
 };
 

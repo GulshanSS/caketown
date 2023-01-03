@@ -16,7 +16,7 @@ const params = {
   params: object({
     categoryId: string({
       required_error: "Category Id is required",
-    }).min(1, { message: "Category Id cannot be empty " }),
+    }),
   }),
 };
 
