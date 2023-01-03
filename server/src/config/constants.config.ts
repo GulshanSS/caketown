@@ -13,4 +13,5 @@ export const FOLDER_NAME = {
   SUB_CATEGORY: "subCategory",
   INNER_CATEGORY: "innerCategory",
   ADD_ON_PRODUCT: "addOnProduct",
+  BLOCK: "block",
 };

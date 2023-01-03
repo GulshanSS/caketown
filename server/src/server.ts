@@ -12,6 +12,7 @@ import SubCategoryRouter from "./routes/subCategory.routes";
 import InnerCategoryRouter from "./routes/innerCategory.routes";
 import AddOnCategoryRouter from "./routes/addOnCategory.routes";
 import AddOnProductRouter from "./routes/addOnProduct.routes";
+import BlockRouter from "./routes/block.routes";
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use("/subcategory", SubCategoryRouter);
 app.use("/innercategory", InnerCategoryRouter);
 app.use("/addoncategory", AddOnCategoryRouter);
 app.use("/addonproduct", AddOnProductRouter);
+app.use("/block", BlockRouter);
 
 app.listen(PORT, () => {
   logger.info(`Server Started at http://localhost:${PORT}`);
