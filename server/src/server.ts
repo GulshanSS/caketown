@@ -13,6 +13,8 @@ import InnerCategoryRouter from "./routes/innerCategory.routes";
 import AddOnCategoryRouter from "./routes/addOnCategory.routes";
 import AddOnProductRouter from "./routes/addOnProduct.routes";
 import BlockRouter from "./routes/block.routes";
+import SliderRouter from "./routes/slider.routes";
+import PincodeRouter from "./routes/pincode.routes";
 
 const app = express();
 
@@ -26,6 +28,8 @@ app.use("/innercategory", InnerCategoryRouter);
 app.use("/addoncategory", AddOnCategoryRouter);
 app.use("/addonproduct", AddOnProductRouter);
 app.use("/block", BlockRouter);
+app.use("/slider", SliderRouter);
+app.use("/pincode", PincodeRouter);
 
 app.listen(PORT, () => {
   logger.info(`Server Started at http://localhost:${PORT}`);

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import { BlockDoc } from "../interfaces/block.interface";
+import { SliderDoc } from "../interfaces/slider.interface";
 
-const BlockSchema = new mongoose.Schema(
+const SliderSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -35,6 +35,6 @@ const BlockSchema = new mongoose.Schema(
   }
 );
 
-const BlockModel = mongoose.model<BlockDoc>("block", BlockSchema);
+const SliderModel = mongoose.model<SliderDoc>("slider", SliderSchema);
 
-export default BlockModel;
+export default SliderModel;
