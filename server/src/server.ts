@@ -15,6 +15,7 @@ import AddOnProductRouter from "./routes/addOnProduct.routes";
 import BlockRouter from "./routes/block.routes";
 import SliderRouter from "./routes/slider.routes";
 import PincodeRouter from "./routes/pincode.routes";
+import AdminUserRouter from "./routes/admin.user.routes";
 
 const app = express();
 
@@ -30,7 +31,8 @@ app.use("/addonproduct", AddOnProductRouter);
 app.use("/block", BlockRouter);
 app.use("/slider", SliderRouter);
 app.use("/pincode", PincodeRouter);
+app.use("/adminuser", AdminUserRouter);
 
-app.listen(PORT, () => {
+app.listen(PORT || 3000, () => {
   logger.info(`Server Started at http://localhost:${PORT}`);
 });

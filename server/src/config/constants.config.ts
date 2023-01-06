@@ -16,3 +16,4 @@ export const FOLDER_NAME = {
   BLOCK: "block",
   SLIDER: "slider",
 };
+export const SALT_ROUNDS = 12;
