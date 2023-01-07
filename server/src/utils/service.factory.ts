@@ -1,4 +1,4 @@
-import { Model, UpdateQuery } from "mongoose";
+import { FilterQuery, Model, QueryOptions, UpdateQuery } from "mongoose";
 
 export const getAllResources = async (model: Model<any>) => {
   try {
@@ -11,6 +11,18 @@ export const getAllResources = async (model: Model<any>) => {
 export const getResourceById = async (model: Model<any>, id: string) => {
   try {
     return await model.findOne({ _id: id });
+  } catch (e: any) {
+    throw new Error(e);
+  }
+};
+
+export const getResource = async (
+  model: Model<any>,
+  query: FilterQuery<any>,
+  options: QueryOptions = { lean: true }
+) => {
+  try {
+    return await model.findOne(query, {}, options);
   } catch (e: any) {
     throw new Error(e);
   }

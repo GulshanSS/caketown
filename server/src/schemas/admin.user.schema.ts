@@ -1,6 +1,6 @@
 import { object, string, boolean, TypeOf } from "zod";
 
-const payload = {
+const createPayload = {
   body: object({
     username: string({
       required_error: "Username is required",
@@ -15,6 +15,19 @@ const payload = {
   }),
 };
 
+const updatePayload = {
+  body: object({
+    username: string()
+      .min(1, { message: "Username cannot be empty" })
+      .optional(),
+    password: string()
+      .min(1, { message: "Passwoed cannot be empty" })
+      .optional(),
+    role: string().min(1, { message: "Role cannot be empty" }).optional(),
+    status: boolean().optional(),
+  }),
+};
+
 const params = {
   params: object({
     adminUserId: string({
@@ -23,9 +36,9 @@ const params = {
   }),
 };
 
-export const createAdminUserSchema = object({ ...payload });
+export const createAdminUserSchema = object({ ...createPayload });
 
-export const updateAdminUserSchema = object({ ...payload, ...params });
+export const updateAdminUserSchema = object({ ...updatePayload, ...params });
 
 export const deleteAdminUserSchema = object({ ...params });
 

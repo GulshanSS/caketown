@@ -5,6 +5,7 @@ import {
   createResource,
   deleteResource,
   getAllResources,
+  getResource,
   getResourceById,
   updateResource,
 } from "../utils/service.factory";
@@ -13,6 +14,9 @@ export const getAllAdminUsers = () => getAllResources(AdminUserModel);
 
 export const getAdminUserById = (adminUserId: string) =>
   getResourceById(AdminUserModel, adminUserId);
+
+export const getAdminUser = (filter: any) =>
+  getResource(AdminUserModel, filter);
 
 export const createAdminUser = (createAdminUserInput: IAdminUser) =>
   createResource(AdminUserModel, createAdminUserInput);

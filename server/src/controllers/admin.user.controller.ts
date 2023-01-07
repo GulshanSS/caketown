@@ -8,6 +8,7 @@ import {
 import {
   createAdminUser,
   deleteAdminUser,
+  getAdminUser,
   getAdminUserById,
   getAllAdminUsers,
   updateAdminUser,
@@ -48,9 +49,18 @@ export const createAdminUserHandler = async (
   res: Response
 ) => {
   try {
+    const adminUsername = req.body.username;
+    const presentAdminUser = await getAdminUser({ username: adminUsername });
+    if (presentAdminUser) {
+      return res
+        .status(200)
+        .json(
+          `Admin user with ${presentAdminUser.username} username is already present`
+        );
+    }
     const body = req.body;
-    const adminUser = await createAdminUser({ ...body });
-    return res.status(201).json(adminUser);
+    const createdAdminUser = await createAdminUser({ ...body });
+    return res.status(201).json(createdAdminUser);
   } catch (e: any) {
     return res.status(409).json({ message: e.message });
   }
@@ -69,6 +79,17 @@ export const updateAdminUserHandler = async (
     const oldAdminUser = await getAdminUserById(adminUserId);
     if (!oldAdminUser) {
       return res.status(404).json({ message: "Admin User not found" });
+    }
+    const adminUsername = req.body.username;
+    if (adminUsername !== oldAdminUser.username) {
+      const presentAdminUser = await getAdminUser({ username: adminUsername });
+      if (presentAdminUser) {
+        return res
+          .status(200)
+          .json(
+            `Cannot update Admin user with ${presentAdminUser.username} username is already present`
+          );
+      }
     }
     const update = req.body;
     const updatedAdminUser = await updateAdminUser({ ...update }, adminUserId);
