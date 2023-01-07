@@ -3,7 +3,7 @@ import uploader from "../config/multer.config";
 import {
   createBlockHandler,
   deleteBlockHandler,
-  getAllBlockHandler,
+  getAllBlocksHandler,
   getBlockByIdHandler,
   updateBlockHandler,
 } from "../controllers/block.controller";
@@ -17,7 +17,7 @@ import {
 
 const BlockRouter = express.Router();
 
-BlockRouter.get("/", getAllBlockHandler);
+BlockRouter.get("/", getAllBlocksHandler);
 
 BlockRouter.get(
   "/:blockId",

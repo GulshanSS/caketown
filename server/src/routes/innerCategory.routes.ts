@@ -3,7 +3,7 @@ import uploader from "../config/multer.config";
 import {
   createInnerCategoryHandler,
   deleteInnerCategoryHandler,
-  getAllInnerCategoryHandler,
+  getAllInnerCategoriesHandler,
   getInnerCategoryByIdHandler,
   updateInnerCategoryHandler,
 } from "../controllers/innerCategory.controller";
@@ -16,7 +16,7 @@ import {
 } from "../schemas/innerCategory.schema";
 const InnerCategoryRouter = express.Router();
 
-InnerCategoryRouter.get("/", getAllInnerCategoryHandler);
+InnerCategoryRouter.get("/", getAllInnerCategoriesHandler);
 
 InnerCategoryRouter.get(
   "/:innerCategoryId",

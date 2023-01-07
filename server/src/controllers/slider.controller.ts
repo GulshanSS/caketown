@@ -10,15 +10,15 @@ import {
 import {
   createSlider,
   deleteSlider,
-  getAllSlider,
+  getAllSliders,
   getSliderById,
   updateSlider,
 } from "../services/slider.service";
 import { deleteAssets, uploadAssets } from "../utils/handleAssetPromises";
 
-export const getAllSliderHandler = async (req: Request, res: Response) => {
+export const getAllSlidersHandler = async (req: Request, res: Response) => {
   try {
-    const sliders = await getAllSlider();
+    const sliders = await getAllSliders();
     if (sliders.length === 0) {
       return res
         .status(200)

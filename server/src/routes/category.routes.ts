@@ -5,7 +5,7 @@ const CategoryRouter = express.Router();
 import {
   createCategoryHandler,
   deleteCategoryHandler,
-  getAllCategoryHandler,
+  getAllCategoriesHandler,
   getCategoryByIdHandler,
   updateCategoryHandler,
 } from "../controllers/category.controller";
@@ -17,7 +17,7 @@ import {
 } from "../schemas/category.schema";
 import validateResource from "../middlewares/validateResource";
 
-CategoryRouter.get("/", getAllCategoryHandler);
+CategoryRouter.get("/", getAllCategoriesHandler);
 
 CategoryRouter.get(
   "/:categoryId",

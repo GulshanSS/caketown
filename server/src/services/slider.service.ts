@@ -1,51 +1,26 @@
 import { UpdateQuery } from "mongoose";
 import { ISlider, SliderDoc } from "../interfaces/slider.interface";
 import SliderModel from "../models/slider.model";
+import {
+  createResource,
+  deleteResource,
+  getAllResources,
+  getResourceById,
+  updateResource,
+} from "../utils/service.factory";
 
-export const getAllSlider = async () => {
-  try {
-    return await SliderModel.find({});
-  } catch (e: any) {
-    throw new Error(e);
-  }
-};
+export const getAllSliders = () => getAllResources(SliderModel);
 
-export const getSliderById = async (sliderId: string) => {
-  try {
-    return await SliderModel.findOne({ _id: sliderId });
-  } catch (e: any) {
-    throw new Error(e);
-  }
-};
+export const getSliderById = (sliderId: string) =>
+  getResourceById(SliderModel, sliderId);
 
-export const createSlider = async (createSliderInput: ISlider) => {
-  try {
-    return await SliderModel.create(createSlider);
-  } catch (e: any) {
-    throw new Error(e);
-  }
-};
+export const createSlider = (createSliderInput: ISlider) =>
+  createResource(SliderModel, createSliderInput);
 
-export const updateSlider = async (
+export const updateSlider = (
   updateSliderInput: UpdateQuery<SliderDoc>,
-  SliderId: string
-) => {
-  try {
-    return await SliderModel.findOneAndUpdate(
-      { _id: SliderId },
-      updateSliderInput,
-      { new: true }
-    );
-  } catch (e: any) {
-    throw new Error(e);
-  }
-};
+  sliderId: string
+) => updateResource(SliderModel, updateSliderInput, sliderId);
 
-export const deleteSlider = async (sliderId: string) => {
-  try {
-    await SliderModel.deleteOne({ _id: sliderId });
-    return true;
-  } catch (e: any) {
-    throw new Error(e);
-  }
-};
+export const deleteSlider = (sliderId: string) =>
+  deleteResource(SliderModel, sliderId);

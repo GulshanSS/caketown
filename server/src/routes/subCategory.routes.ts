@@ -5,7 +5,7 @@ const SubCategoryRouter = express.Router();
 import {
   createSubCategoryHandler,
   deleteSubCategoryHandler,
-  getAllSubCategoryHandler,
+  getAllSubCategoriesHandler,
   getSubCategoryByIdHandler,
   updateSubCategoryHandler,
 } from "../controllers/subCategory.controller";
@@ -17,7 +17,7 @@ import {
   updateSubCategorySchema,
 } from "../schemas/subCategory.schema";
 
-SubCategoryRouter.get("/", getAllSubCategoryHandler);
+SubCategoryRouter.get("/", getAllSubCategoriesHandler);
 
 SubCategoryRouter.get(
   "/:subCategoryId",

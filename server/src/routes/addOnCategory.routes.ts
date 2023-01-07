@@ -3,7 +3,7 @@ import {
   createAddOnCategoryHandler,
   deleteAddOnCategoryHandler,
   getAddOnCategoryByIdHandler,
-  getAllAddOnCategoryHandler,
+  getAllAddOnCategoriesHandler,
   updateAddOnCategoryHandler,
 } from "../controllers/addOnCategory.controller";
 import validateResource from "../middlewares/validateResource";
@@ -16,7 +16,7 @@ import {
 
 const AddOnCategoryRouter = express.Router();
 
-AddOnCategoryRouter.get("/", getAllAddOnCategoryHandler);
+AddOnCategoryRouter.get("/", getAllAddOnCategoriesHandler);
 
 AddOnCategoryRouter.get(
   "/:addOnCategoryId",

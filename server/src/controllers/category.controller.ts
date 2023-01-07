@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import {
   createCategory,
   deleteCategory,
-  getAllCategory,
+  getAllCategories,
   getCategoryById,
   updateCategory,
 } from "../services/category.service";
@@ -17,9 +17,9 @@ import IFile from "../interfaces/file.interface";
 import { deleteAssets, uploadAssets } from "../utils/handleAssetPromises";
 import { FOLDER_NAME } from "../config/constants.config";
 
-export const getAllCategoryHandler = async (req: Request, res: Response) => {
+export const getAllCategoriesHandler = async (req: Request, res: Response) => {
   try {
-    const categories = await getAllCategory();
+    const categories = await getAllCategories();
     if (categories.length === 0) {
       return res
         .status(200)

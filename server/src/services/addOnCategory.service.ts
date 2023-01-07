@@ -4,55 +4,27 @@ import {
   IAddOnCategory,
 } from "../interfaces/addOnCategory.interface";
 import AddOnCategoryModel from "../models/addOnCategory.model";
+import {
+  createResource,
+  deleteResource,
+  getAllResources,
+  getResourceById,
+  updateResource,
+} from "../utils/service.factory";
 
-export const getAllAddOnCategory = async () => {
-  try {
-    return await AddOnCategoryModel.find({});
-  } catch (e: any) {
-    throw new Error(e);
-  }
-};
+export const getAllAddOnCategories = () => getAllResources(AddOnCategoryModel);
 
-export const getAddOnCategoryById = async (addOnCategoryId: string) => {
-  try {
-    return await AddOnCategoryModel.findOne({ _id: addOnCategoryId });
-  } catch (e: any) {
-    throw new Error(e);
-  }
-};
+export const getAddOnCategoryById = (addOnCategoryId: string) =>
+  getResourceById(AddOnCategoryModel, addOnCategoryId);
 
-export const createAddOnCategory = async (
-  createAddOnCategoryInput: IAddOnCategory
-) => {
-  try {
-    return await AddOnCategoryModel.create(createAddOnCategoryInput);
-  } catch (e: any) {
-    throw new Error(e);
-  }
-};
+export const createAddOnCategory = (createAddOnCategoryInput: IAddOnCategory) =>
+  createResource(AddOnCategoryModel, createAddOnCategoryInput);
 
-export const updateAddOnCategory = async (
+export const updateAddOnCategory = (
   addOnCategoryId: string,
   updateAddOnCategoryInput: UpdateQuery<AddOnCategoryDoc>
-) => {
-  try {
-    return await AddOnCategoryModel.findOneAndUpdate(
-      {
-        _id: addOnCategoryId,
-      },
-      updateAddOnCategoryInput,
-      { new: true }
-    );
-  } catch (e: any) {
-    throw new Error(e);
-  }
-};
+) =>
+  updateResource(AddOnCategoryModel, updateAddOnCategoryInput, addOnCategoryId);
 
-export const deleteAddOnCategory = async (addOnCategoryId: string) => {
-  try {
-    await AddOnCategoryModel.deleteOne({ _id: addOnCategoryId });
-    return true;
-  } catch (e: any) {
-    throw new Error(e);
-  }
-};
+export const deleteAddOnCategory = (addOnCategoryId: string) =>
+  deleteResource(AddOnCategoryModel, addOnCategoryId);

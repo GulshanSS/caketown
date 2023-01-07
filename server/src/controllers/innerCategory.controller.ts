@@ -10,18 +10,18 @@ import {
 import {
   createInnerCategory,
   deleteInnerCategory,
-  getAllInnerCategory,
+  getAllInnerCategories,
   getInnerCategoryById,
   updateInnerCategory,
 } from "../services/innerCategory.service";
 import { deleteAssets, uploadAssets } from "../utils/handleAssetPromises";
 
-export const getAllInnerCategoryHandler = async (
+export const getAllInnerCategoriesHandler = async (
   req: Request,
   res: Response
 ) => {
   try {
-    const innerCategories = await getAllInnerCategory();
+    const innerCategories = await getAllInnerCategories();
     if (innerCategories.length === 0) {
       return res
         .status(200)

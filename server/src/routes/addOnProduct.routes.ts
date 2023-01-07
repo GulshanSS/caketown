@@ -4,7 +4,7 @@ import {
   createAddOnProductHandler,
   deleteAddOnProductHandler,
   getAddOnProductHandler,
-  getAllAddOnProductHandler,
+  getAllAddOnProductsHandler,
   updateAddOnProductHandler,
 } from "../controllers/addOnProduct.controller";
 import validateResource from "../middlewares/validateResource";
@@ -17,7 +17,7 @@ import {
 
 const AddOnProductRouter = express.Router();
 
-AddOnProductRouter.get("/", getAllAddOnProductHandler);
+AddOnProductRouter.get("/", getAllAddOnProductsHandler);
 
 AddOnProductRouter.get(
   "/:addOnProductId",

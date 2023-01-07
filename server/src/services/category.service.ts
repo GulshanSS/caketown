@@ -9,7 +9,7 @@ import {
   updateResource,
 } from "../utils/service.factory";
 
-export const getAllCategory = () => getAllResources(CategoryModel);
+export const getAllCategories = () => getAllResources(CategoryModel);
 
 export const getCategoryById = (categoryId: string) =>
   getResourceById(CategoryModel, categoryId);

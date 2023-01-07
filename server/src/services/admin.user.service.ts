@@ -1,51 +1,26 @@
 import { UpdateQuery } from "mongoose";
 import { AdminUserDoc, IAdminUser } from "../interfaces/admin.user.interface";
 import AdminUserModel from "../models/admin.user.model";
+import {
+  createResource,
+  deleteResource,
+  getAllResources,
+  getResourceById,
+  updateResource,
+} from "../utils/service.factory";
 
-export const getAllAdminUsers = async () => {
-  try {
-    return await AdminUserModel.find({});
-  } catch (e: any) {
-    throw new Error(e);
-  }
-};
+export const getAllAdminUsers = () => getAllResources(AdminUserModel);
 
-export const getAdminUserById = async (adminUserId: string) => {
-  try {
-    return await AdminUserModel.findOne({ _id: adminUserId });
-  } catch (e: any) {
-    throw new Error(e);
-  }
-};
+export const getAdminUserById = (adminUserId: string) =>
+  getResourceById(AdminUserModel, adminUserId);
 
-export const createAdminUser = async (createAdminUserInput: IAdminUser) => {
-  try {
-    return await AdminUserModel.create(createAdminUserInput);
-  } catch (e: any) {
-    throw new Error(e);
-  }
-};
+export const createAdminUser = (createAdminUserInput: IAdminUser) =>
+  createResource(AdminUserModel, createAdminUserInput);
 
-export const updateAdminUser = async (
+export const updateAdminUser = (
   updateAdminUserInput: UpdateQuery<AdminUserDoc>,
   adminUserId: string
-) => {
-  try {
-    return await AdminUserModel.findOneAndUpdate(
-      { _id: adminUserId },
-      updateAdminUserInput,
-      { new: true }
-    );
-  } catch (e: any) {
-    throw new Error(e);
-  }
-};
+) => updateResource(AdminUserModel, updateAdminUserInput, adminUserId);
 
-export const deleteAdminUser = async (adminUserId: string) => {
-  try {
-    await AdminUserModel.deleteOne({ _id: adminUserId });
-    return true;
-  } catch (e: any) {
-    throw new Error(e);
-  }
-};
+export const deleteAdminUser = (adminUserId: string) =>
+  deleteResource(AdminUserModel, adminUserId);

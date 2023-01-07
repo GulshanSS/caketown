@@ -10,15 +10,15 @@ import {
 import {
   createBlock,
   deleteBlock,
-  getAllBlock,
+  getAllBlocks,
   getBlockById,
   updateBlock,
 } from "../services/block.service";
 import { deleteAssets, uploadAssets } from "../utils/handleAssetPromises";
 
-export const getAllBlockHandler = async (req: Request, res: Response) => {
+export const getAllBlocksHandler = async (req: Request, res: Response) => {
   try {
-    const blocks = await getAllBlock();
+    const blocks = await getAllBlocks();
     if (blocks.length === 0) {
       return res
         .status(200)

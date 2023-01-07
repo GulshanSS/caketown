@@ -11,17 +11,17 @@ import {
   createAddOnProduct,
   deleteAddOnProduct,
   getAddOnProductById,
-  getAllAddOnProduct,
+  getAllAddOnProducts,
   updateAddOnProduct,
 } from "../services/addOnProduct.service";
 import { deleteAssets, uploadAssets } from "../utils/handleAssetPromises";
 
-export const getAllAddOnProductHandler = async (
+export const getAllAddOnProductsHandler = async (
   req: Request,
   res: Response
 ) => {
   try {
-    const addOnProducts = await getAllAddOnProduct();
+    const addOnProducts = await getAllAddOnProducts();
     if (addOnProducts.length === 0) {
       return res
         .status(200)

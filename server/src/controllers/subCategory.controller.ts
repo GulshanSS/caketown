@@ -10,15 +10,18 @@ import {
 import {
   createSubCategory,
   deleteSubCategory,
-  getAllSubCategory,
+  getAllSubCategories,
   getSubCategoryById,
   updateSubCategory,
 } from "../services/subCategory.service";
 import { deleteAssets, uploadAssets } from "../utils/handleAssetPromises";
 
-export const getAllSubCategoryHandler = async (req: Request, res: Response) => {
+export const getAllSubCategoriesHandler = async (
+  req: Request,
+  res: Response
+) => {
   try {
-    const subCategories = await getAllSubCategory();
+    const subCategories = await getAllSubCategories();
     if (subCategories.length === 0) {
       return res
         .status(200)

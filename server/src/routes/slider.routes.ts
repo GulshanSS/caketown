@@ -3,7 +3,7 @@ import uploader from "../config/multer.config";
 import {
   createSliderHandler,
   deleteSliderHandler,
-  getAllSliderHandler,
+  getAllSlidersHandler,
   getSliderByIdHandler,
   updateSliderHandler,
 } from "../controllers/slider.controller";
@@ -17,7 +17,7 @@ import {
 
 const SliderRouter = express.Router();
 
-SliderRouter.get("/", getAllSliderHandler);
+SliderRouter.get("/", getAllSlidersHandler);
 
 SliderRouter.get(
   "/:sliderId",

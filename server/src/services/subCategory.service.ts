@@ -4,53 +4,26 @@ import {
   SubCategoryDoc,
 } from "../interfaces/subCategory.interface";
 import SubCategoryModel from "../models/subCategory.model";
+import {
+  createResource,
+  deleteResource,
+  getAllResources,
+  getResourceById,
+  updateResource,
+} from "../utils/service.factory";
 
-export const getAllSubCategory = async () => {
-  try {
-    return await SubCategoryModel.find({});
-  } catch (e: any) {
-    throw new Error(e);
-  }
-};
+export const getAllSubCategories = () => getAllResources(SubCategoryModel);
 
-export const getSubCategoryById = async (subCategoryId: string) => {
-  try {
-    return await SubCategoryModel.findOne({ _id: subCategoryId });
-  } catch (e: any) {
-    throw new Error(e);
-  }
-};
+export const getSubCategoryById = (subCategoryId: string) =>
+  getResourceById(SubCategoryModel, subCategoryId);
 
-export const createSubCategory = async (
-  createSubCategoryInput: ISubCategory
-) => {
-  try {
-    return await SubCategoryModel.create(createSubCategoryInput);
-  } catch (e: any) {
-    throw new Error(e);
-  }
-};
+export const createSubCategory = (createSubCategoryInput: ISubCategory) =>
+  createResource(SubCategoryModel, createSubCategoryInput);
 
-export const updateSubCategory = async (
+export const updateSubCategory = (
   subCategoryId: string,
   updateSubCategoryInput: UpdateQuery<SubCategoryDoc>
-) => {
-  try {
-    return await SubCategoryModel.findOneAndUpdate(
-      { _id: subCategoryId },
-      updateSubCategoryInput,
-      { new: true }
-    );
-  } catch (e: any) {
-    throw new Error(e);
-  }
-};
+) => updateResource(SubCategoryModel, updateSubCategoryInput, subCategoryId);
 
-export const deleteSubCategory = async (subCategoryId: string) => {
-  try {
-    await SubCategoryModel.deleteOne({ _id: subCategoryId });
-    return true;
-  } catch (e: any) {
-    throw new Error(e);
-  }
-};
+export const deleteSubCategory = (subCategoryId: string) =>
+  deleteResource(SubCategoryModel, subCategoryId);

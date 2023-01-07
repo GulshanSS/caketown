@@ -2,52 +2,27 @@ import { UpdateQuery } from "mongoose";
 import { IInnerCategory } from "../interfaces/innerCategory.interface";
 import { SubCategoryDoc } from "../interfaces/subCategory.interface";
 import InnerCategoryModel from "../models/innerCategory.model";
+import {
+  createResource,
+  deleteResource,
+  getAllResources,
+  getResourceById,
+  updateResource,
+} from "../utils/service.factory";
 
-export const getAllInnerCategory = async () => {
-  try {
-    return await InnerCategoryModel.find({});
-  } catch (e: any) {
-    throw new Error(e);
-  }
-};
+export const getAllInnerCategories = () => getAllResources(InnerCategoryModel);
 
-export const getInnerCategoryById = async (innerCategoryId: string) => {
-  try {
-    return await InnerCategoryModel.findOne({ _id: innerCategoryId });
-  } catch (e: any) {
-    throw new Error(e);
-  }
-};
+export const getInnerCategoryById = (innerCategoryId: string) =>
+  getResourceById(InnerCategoryModel, innerCategoryId);
 
-export const createInnerCategory = async (
-  createInnerCategoryInput: IInnerCategory
-) => {
-  try {
-    return await InnerCategoryModel.create(createInnerCategoryInput);
-  } catch (e: any) {
-    throw new Error(e);
-  }
-};
+export const createInnerCategory = (createInnerCategoryInput: IInnerCategory) =>
+  createResource(InnerCategoryModel, createInnerCategoryInput);
 
-export const updateInnerCategory = async (
+export const updateInnerCategory = (
   innerCategoryId: string,
   updateInnerCategoryInput: UpdateQuery<SubCategoryDoc>
-) => {
-  try {
-    return await InnerCategoryModel.findOneAndUpdate(
-      { _id: innerCategoryId },
-      updateInnerCategoryInput,
-      { new: true }
-    );
-  } catch (e: any) {
-    throw new Error(e);
-  }
-};
+) =>
+  updateResource(InnerCategoryModel, updateInnerCategoryInput, innerCategoryId);
 
-export const deleteInnerCategory = async (innerCategoryId: string) => {
-  try {
-    await InnerCategoryModel.deleteOne({ _id: innerCategoryId });
-  } catch (e: any) {
-    throw new Error(e);
-  }
-};
+export const deleteInnerCategory = (innerCategoryId: string) =>
+  deleteResource(InnerCategoryModel, innerCategoryId);

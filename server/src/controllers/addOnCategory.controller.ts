@@ -9,16 +9,16 @@ import {
   createAddOnCategory,
   deleteAddOnCategory,
   getAddOnCategoryById,
-  getAllAddOnCategory,
+  getAllAddOnCategories,
   updateAddOnCategory,
 } from "../services/addOnCategory.service";
 
-export const getAllAddOnCategoryHandler = async (
+export const getAllAddOnCategoriesHandler = async (
   req: Request,
   res: Response
 ) => {
   try {
-    const addOnCategories = await getAllAddOnCategory();
+    const addOnCategories = await getAllAddOnCategories();
     if (addOnCategories.length === 0) {
       return res
         .status(200)
