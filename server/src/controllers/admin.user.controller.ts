@@ -54,9 +54,9 @@ export const createAdminUserHandler = async (
     if (presentAdminUser) {
       return res
         .status(200)
-        .json(
-          `Admin user with ${presentAdminUser.username} username is already present`
-        );
+        .json({
+          message: `Admin user with ${presentAdminUser.username} username is already present`,
+        });
     }
     const body = req.body;
     const createdAdminUser = await createAdminUser({ ...body });

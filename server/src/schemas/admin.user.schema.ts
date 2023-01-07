@@ -28,6 +28,17 @@ const updatePayload = {
   }),
 };
 
+const loginPayload = {
+  body: object({
+    username: string({
+      required_error: "Username is required",
+    }).min(1, { message: "Username cannot be empty" }),
+    password: string({
+      required_error: "Password is required",
+    }).min(1, { message: "Passwoed cannot be empty" }),
+  }),
+};
+
 const params = {
   params: object({
     adminUserId: string({
@@ -44,7 +55,10 @@ export const deleteAdminUserSchema = object({ ...params });
 
 export const getAdminUserSchema = object({ ...params });
 
+export const loginAdminUserSchema = object({ ...loginPayload });
+
 export type CreateAdminUserInput = TypeOf<typeof createAdminUserSchema>;
 export type UpdateAdminUserInput = TypeOf<typeof updateAdminUserSchema>;
 export type DeleteAdminUserInput = TypeOf<typeof deleteAdminUserSchema>;
 export type GetAdminUserInput = TypeOf<typeof getAdminUserSchema>;
+export type LoginAdminUserInput = TypeOf<typeof loginAdminUserSchema>;
