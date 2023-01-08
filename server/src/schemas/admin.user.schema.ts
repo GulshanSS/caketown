@@ -1,4 +1,4 @@
-import { object, string, boolean, TypeOf } from "zod";
+import { object, string, boolean, array, TypeOf } from "zod";
 
 const createPayload = {
   body: object({
@@ -8,9 +8,11 @@ const createPayload = {
     password: string({
       required_error: "Password is required",
     }).min(1, { message: "Passwoed cannot be empty" }),
-    role: string({
-      required_error: "Role is required",
-    }).min(1, { message: "Role cannot be empty" }),
+    roles: array(
+      string({
+        required_error: "Role is required",
+      }).min(1, { message: "Role cannot be empty" })
+    ).nonempty({ message: "Atleast one role should be assigned" }),
     status: boolean().optional(),
   }),
 };
@@ -23,7 +25,9 @@ const updatePayload = {
     password: string()
       .min(1, { message: "Passwoed cannot be empty" })
       .optional(),
-    role: string().min(1, { message: "Role cannot be empty" }).optional(),
+    roles: array(
+      string().min(1, { message: "Role cannot be empty" })
+    ).optional(),
     status: boolean().optional(),
   }),
 };

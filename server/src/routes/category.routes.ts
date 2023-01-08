@@ -16,8 +16,9 @@ import {
   updateCategorySchema,
 } from "../schemas/category.schema";
 import validateResource from "../middlewares/validateResource";
+import { authorize } from "../middlewares/authorize";
 
-CategoryRouter.get("/", getAllCategoriesHandler);
+CategoryRouter.get("/", authorize(["admin"]), getAllCategoriesHandler);
 
 CategoryRouter.get(
   "/:categoryId",

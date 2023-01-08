@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 export interface IAdminUser {
   username: string;
   password: string;
-  role: string;
+  roles: string[];
   status?: boolean;
 }
 

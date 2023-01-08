@@ -16,7 +16,8 @@ import BlockRouter from "./routes/block.routes";
 import SliderRouter from "./routes/slider.routes";
 import PincodeRouter from "./routes/pincode.routes";
 import AdminUserRouter from "./routes/admin.user.routes";
-import AuthRouter from "./routes/auth.admin.user.routes";
+import AdminAuthRouter from "./routes/admin.auth.routes";
+import { verifyJwt } from "./middlewares/verifyJwt";
 
 const app = express();
 
@@ -24,6 +25,9 @@ app.use(express.json());
 
 dbConnect();
 
+app.use("/admin/auth", AdminAuthRouter);
+app.use("/adminuser", AdminUserRouter);
+app.use(verifyJwt);
 app.use("/category", CategoryRouter);
 app.use("/subcategory", SubCategoryRouter);
 app.use("/innercategory", InnerCategoryRouter);
@@ -32,8 +36,6 @@ app.use("/addonproduct", AddOnProductRouter);
 app.use("/block", BlockRouter);
 app.use("/slider", SliderRouter);
 app.use("/pincode", PincodeRouter);
-app.use("/adminuser", AdminUserRouter);
-app.use("/auth", AuthRouter);
 
 app.listen(PORT || 3000, () => {
   logger.info(`Server Started at http://localhost:${PORT}`);

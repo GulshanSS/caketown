@@ -52,11 +52,9 @@ export const createAdminUserHandler = async (
     const adminUsername = req.body.username;
     const presentAdminUser = await getAdminUser({ username: adminUsername });
     if (presentAdminUser) {
-      return res
-        .status(200)
-        .json({
-          message: `Admin user with ${presentAdminUser.username} username is already present`,
-        });
+      return res.status(200).json({
+        message: `Admin user with ${presentAdminUser.username} username is already present`,
+      });
     }
     const body = req.body;
     const createdAdminUser = await createAdminUser({ ...body });
@@ -90,6 +88,9 @@ export const updateAdminUserHandler = async (
             `Cannot update Admin user with ${presentAdminUser.username} username is already present`
           );
       }
+    }
+    if (req.body.roles) {
+      req.body.roles = [...req.body.roles, ...oldAdminUser.roles];
     }
     const update = req.body;
     const updatedAdminUser = await updateAdminUser({ ...update }, adminUserId);

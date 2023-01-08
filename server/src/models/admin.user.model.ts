@@ -11,10 +11,12 @@ const AdminUserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    role: {
-      type: String,
-      default: ["admin", "worker"],
-    },
+    roles: [
+      {
+        type: String,
+        default: ["admin", "worker"],
+      },
+    ],
     status: {
       type: Boolean,
       default: true,
