@@ -4,8 +4,6 @@ import { LoginAdminUserInput } from "../schemas/admin.user.schema";
 import { getAdminUser } from "../services/admin.user.service";
 import { generateToken, verifyToken } from "../utils/jwt";
 import { TOKEN } from "../config/constants.config";
-import logger from "../config/logger.config";
-import { decode } from "punycode";
 
 export const getTokenHandler = async (
   req: Request<LoginAdminUserInput["body"]>,
@@ -48,7 +46,7 @@ export const getTokenHandler = async (
   }
 };
 
-export const getRefreshTokenHandler = (req: Request, res: Response) => {
+export const getRefreshTokenHandler = async (req: Request, res: Response) => {
   const refreshtoken = req.headers["x-refresh"] as string;
   if (!refreshtoken) {
     return res.status(401).json({ message: "Login to continue" });
