@@ -15,6 +15,7 @@ export const FOLDER_NAME = {
   ADD_ON_PRODUCT: "addOnProduct" as string,
   BLOCK: "block" as string,
   SLIDER: "slider" as string,
+  PRODUCT: "product" as string,
 };
 export const SALT_ROUNDS = 12 as number;
 export const KEY = {

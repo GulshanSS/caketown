@@ -6,7 +6,6 @@ import {
   getCategoryById,
   updateCategory,
 } from "../services/category.service";
-import logger from "../config/logger.config";
 import {
   CreateCategoryInput,
   DeleteCategoryInput,
@@ -43,7 +42,6 @@ export const getCategoryByIdHandler = async (
     }
     return res.status(200).json(category);
   } catch (e: any) {
-    logger.error(e);
     return res.status(409).json({ message: e.message });
   }
 };
@@ -109,7 +107,6 @@ export const deleteCategoryHandler = async (
       .status(200)
       .json({ message: `${category.name} category is deleted` });
   } catch (e: any) {
-    console.log(e);
     return res.status(409).json(e.message);
   }
 };

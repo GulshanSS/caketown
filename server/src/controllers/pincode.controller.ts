@@ -21,6 +21,7 @@ export const getAllPincodesHandler = async (req: Request, res: Response) => {
         .status(200)
         .json({ message: "There are no Pincodes available to display" });
     }
+    return res.status(200).json({ items: pincodes.length, pincodes });
   } catch (e: any) {
     return res.status(409).json({ message: e.message });
   }
@@ -84,7 +85,9 @@ export const deletePincodeHandler = async (
       return res.status(404).json({ message: "Pincode not found" });
     }
     await deletePincode(pincodeId);
-    return res.status(200).json({ message: `${pincode.pincode} is deleted` });
+    return res
+      .status(200)
+      .json({ message: `${pincode.pincode} pincode is deleted` });
   } catch (e: any) {
     return res.status(409).json({ message: e.message });
   }
